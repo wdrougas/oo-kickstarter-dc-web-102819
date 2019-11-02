@@ -7,7 +7,7 @@ class Project
 
     def initialize(title)
         @title = title
-        @backers = []
+        #@backers = []
         @@all << self
     end
 
@@ -15,8 +15,13 @@ class Project
         @@all
     end
 
-    def add_backer(backer)
-        backer.backed_projects << self
-        @backers << backer
+    def view_backers
+        BackerProjects.all.select do |projectTeam|
+            projectTeam.backer == self
+        end.map do |investor|
+            investor.project
+        end.each do |backer|
+            puts "#{backer.name} has invested into #{self.title}."
+        end
     end
 end
